@@ -9,19 +9,29 @@ Starting with version 2.0.0, the transport has been refactored to leverage the t
 ## New Feature from this fork
 Added ability to rotate on different intervals like x minutes or x hours. just override frequency options like '5m' '10m' '12h'.
  
-```
-var winston = require('winston');
-require('winston-daily-rotate-file');
+``` js
+	var appRoot = require('app-root-path');
+	const path = require('path');
 
-var stbloggerTransport = new (winston.transports.DailyRotateFile)({
-  name: 'rotated',
-  filename : path.join(`${appRoot}`, 'logs','stblogs'),    
-  datePattern : 'YYYYMMDD.HHmm[00.log]',
-  frequency : "5m",    
-  json: false,
-  colorize: false,
-  format: format.combine( format.printf(info => `${info.message}`))
-  });
+	var winston = require('winston');
+	require('winston-daily-rotate-file');
+
+	var stbloggerTransport = new (winston.transports.DailyRotateFile)({
+	  name: 'rotated',
+	  filename : path.join(`${appRoot}`, 'logs','stblogs'),
+	  datePattern : 'YYYYMMDD.HHmm[00.log]',
+	  frequency : "5m",
+	  json: false,
+	  colorize: false,
+	  format: format.combine( format.printf(info => `${info.message}`))
+	});
+	var logger = winston.createLogger({
+	transports: [
+	  stbloggerTransport
+	]
+	});
+
+	logger.info('Hello World!');
 ```
 
 ## Install
