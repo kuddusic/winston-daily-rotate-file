@@ -6,6 +6,24 @@ A transport for [winston](https://github.com/winstonjs/winston) which logs to a 
 
 Starting with version 2.0.0, the transport has been refactored to leverage the the [file-stream-rotator](https://github.com/rogerc/file-stream-rotator/) module. _Some of the options in the 1.x versions of the transport have changed._ Please review the options below to identify any changes needed.
 
+## New Feature from this fork
+Added ability to rotate on different intervals like x minutes or x hours. just override frequency options like '5m' '10m' '12h'.
+ 
+```
+var winston = require('winston');
+require('winston-daily-rotate-file');
+
+var stbloggerTransport = new (winston.transports.DailyRotateFile)({
+  name: 'rotated',
+  filename : path.join(`${appRoot}`, 'logs','stblogs'),    
+  datePattern : 'YYYYMMDD.HHmm[00.log]',
+  frequency : "5m",    
+  json: false,
+  colorize: false,
+  format: format.combine( format.printf(info => `${info.message}`))
+  });
+```
+
 ## Install
 ```
 npm install winston-daily-rotate-file
